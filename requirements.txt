@@ -5,4 +5,5 @@ streamlit
 Pillow
 numpy
 matplotlib
+torch torchvision
 git+https://github.com/luca-medeiros/lang-segment-anything.git
