@@ -1,7 +1,7 @@
+streamlit
 torchvision
 torch -f https://data.pyg.org/whl/torch-1.13.0+${CUDA}.html
 git+https://github.com/luca-medeiros/lang-segment-anything.git
-streamlit
 Pillow
 numpy
 matplotlib
