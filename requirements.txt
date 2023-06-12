@@ -5,4 +5,5 @@ numpy
 matplotlib
 torch
 torchvision
+groundingdino-py
 git+https://github.com/luca-medeiros/lang-segment-anything.git
