@@ -10,25 +10,25 @@ from lang_sam.utils import draw_image
 import numpy as np
 import matplotlib.pyplot as plt
 model = LangSAM()
-import torch
-import torchvision.transforms as T
 
 def clip_image(image_path, masks, segment):
-    image_pil = load_image(image_path)
-    image = np.asarray(image_pil)
-    image_t = torch.from_numpy(image).permute(2, 0, 1)
+    image_pil = Image.open(image_path)
+    image = np.array(image_pil)
+    image_t = np.transpose(image, (2, 0, 1))
 
-    mask_tensor = torch.where(masks[segment], torch.tensor(1), torch.tensor(0))
-    image_1 = image_t[0].unsqueeze(0)
-    image_2 = image_t[1].unsqueeze(0)
-    image_3 = image_t[2].unsqueeze(0)
+    mask_array = np.where(masks[segment], 1, 0)
 
-    masked_tensor1 = image_1 * mask_tensor
-    masked_tensor2 = image_2 * mask_tensor
-    masked_tensor3 = image_3 * mask_tensor
+    image_1 = image_t[0].reshape(1, image_t.shape[1], image_t.shape[2])
+    image_2 = image_t[1].reshape(1, image_t.shape[1], image_t.shape[2])
+    image_3 = image_t[2].reshape(1, image_t.shape[1], image_t.shape[2])
 
-    combined_tensor = torch.cat((masked_tensor1, masked_tensor2, masked_tensor3))
-    return combined_tensor
+    masked_array1 = image_1 * mask_array
+    masked_array2 = image_2 * mask_array
+    masked_array3 = image_3 * mask_array
+
+    combined_array = np.concatenate((masked_array1, masked_array2, masked_array3))
+
+    return combined_array
 
 def predicter(box_threshold, text_threshold, image_path, text_prompt):
 
@@ -79,7 +79,7 @@ def predicter_mask(box_threshold, text_threshold, image_path, text_prompt):
         #######
 
         with open(tmp.name + "img.jpg", "rb") as fp:
-            btn = st.download_button(
+            st.download_button(
                 label = "Download Predicted Image",
                 data = fp,
                 file_name = image_name + str(box_threshold) + "_" + str(text_threshold) + "_" + text_prompt+".jpg",
@@ -91,10 +91,13 @@ def predicter_mask(box_threshold, text_threshold, image_path, text_prompt):
         dim = masks.shape[0]
         print("*************************+++++++++++++++++++++++++++++************************************")
         print(dim)
-        for i in range((dim-1)):
+        for i in range((dim)):
             masked_image = clip_image(image_path, masks, i)
             print(masked_image)
-            plt.imshow(masked_image.permute(1, 2, 0) )
+  
+            combined_array = np.transpose(masked_image, (1, 2, 0))  # Transpose dimensions to (height, width, channels)
+            combined_array = np.clip(combined_array, 0, 255).astype(np.uint8)  # Clip values to 0-255 and convert to uint8
+            plt.imshow(combined_array)
             plt.savefig(tmp.name + "img" + text_prompt + str(i) + ".jpg", dpi=300)   
             plt.axis('off')
 
