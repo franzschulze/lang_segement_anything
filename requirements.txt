@@ -1,6 +1,6 @@
 git+https://github.com/luca-medeiros/lang-segment-anything.git
 streamlit
-PIL
+Pillow
 numpy
 matplotlib
 torch
