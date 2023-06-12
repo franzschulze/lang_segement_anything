@@ -1,6 +1,5 @@
 import streamlit as st
 import tempfile
-import tempfile
 
 # import leafmap
 from PIL import Image

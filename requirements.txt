@@ -1,0 +1,7 @@
+-U git+https://github.com/luca-medeiros/lang-segment-anything.git
+streamlit
+PIL
+numpy
+matplotlib
+torch
+torchvision
