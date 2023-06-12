@@ -1,5 +1,5 @@
 git+https://github.com/facebookresearch/segment-anything.git
-groundingdino==0.1.0
+groundingdino
 torch==1.12.1
 torchvision==0.13.1
 streamlit
