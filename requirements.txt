@@ -1,7 +1,7 @@
 pip
 streamlit
 torch==1.10.0
-torchvision
+torchvision==0.11.1+cu113
 git+https://github.com/luca-medeiros/lang-segment-anything.git
 Pillow
 numpy
