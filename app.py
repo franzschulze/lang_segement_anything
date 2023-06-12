@@ -10,9 +10,7 @@ from lang_sam.utils import draw_image
 import numpy as np
 import matplotlib.pyplot as plt
 model = LangSAM()
-import os
 import torch
-import torchvision
 import torchvision.transforms as T
 
 def clip_image(image_path, masks, segment):
